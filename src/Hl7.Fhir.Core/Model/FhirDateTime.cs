@@ -45,7 +45,10 @@ namespace Hl7.Fhir.Model
         {
         }
 
-        public FhirDateTime(DateTime dt) : this( new DateTimeOffset(dt) )
+        public FhirDateTime(DateTime dt) : this(
+            dt.ToUniversalTime() <= DateTimeOffset.MinValue.UtcDateTime
+                   ? DateTimeOffset.MinValue
+                   : new DateTimeOffset(dt))
         {
         }
 
